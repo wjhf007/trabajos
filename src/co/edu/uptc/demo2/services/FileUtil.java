@@ -55,7 +55,8 @@ public class FileUtil {
     while((cad= file.read())!= null){
       String[] data = cad.split("\n");
       for(int i = 0; i < data.length; i++){
-        text += (data[i] + "\n");
+        String[] newText = data[i].split(",");
+          text += newText[0] + "     " + newText[1] + "     " + newText[2] + "     " + newText[3] + "     \n";
       }
     }
 
