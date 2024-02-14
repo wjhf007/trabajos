@@ -1,8 +1,10 @@
 package co.edu.uptc.demo2.controllers;
 
+import java.io.IOException;
 
 import co.edu.uptc.demo2.models.MyFile;
 import co.edu.uptc.demo2.services.FileUtil;
+import co.edu.uptc.demo2.services.Persistence;
 
 public class FileController {
     
@@ -48,6 +50,10 @@ public class FileController {
         System.out.println(file.readFile());
     }
 
+    public void showByteData() throws IOException{
+        Persistence pr = new Persistence("archivo.txt");
+        pr.readFileByteToByte();
+    }
 
 
 }

@@ -2,10 +2,12 @@ package co.edu.uptc.demo2.services;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class Persistence {
 
@@ -71,5 +73,37 @@ public void open(char modo)	{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	 }
+
+	 public void readFileByteToByte() throws IOException{
+		File filePath = new File(f.getAbsolutePath());
+		FileInputStream fis = new FileInputStream(filePath);
+		byte[] byte_array = new byte[(int) filePath.length()];
+		int contador = 0;
+		int byteLeido;
+		while((byteLeido =fis.read()) != -1){	
+			//System.out.print(Integer.toHexString(byteLeido) + "");
+			System.out.print(this.convertByte(byteLeido));
+			byte_array[contador] = (byte) byteLeido;
+			contador++;
+			if(contador%16 == 1){
+				System.out.println();
+			}
+		}
+		fis.close();
+	 }
+
+	 public char convertByte(int byteLeido){
+		char output;
+		if(byteLeido == 10){
+			output = ' ';
+		}else if(byteLeido == 92){
+			output = 32;
+		}else if (byteLeido >= 0 && byteLeido <= 9) {
+			output = (char) (byteLeido + 48);
+		}{
+			output = (char) byteLeido;
+		}
+		return output;
 	 }
 }
