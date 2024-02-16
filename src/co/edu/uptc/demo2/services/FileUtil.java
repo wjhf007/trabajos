@@ -2,6 +2,8 @@ package co.edu.uptc.demo2.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.FileInputStream;
+import co.edu.uptc.demo2.models.*;
 
 import co.edu.uptc.demo2.models.MyFile;
 
@@ -12,7 +14,7 @@ public class FileUtil {
     file = new File(path);
     String[] listaArchivos = file.list();
     return listaArchivos;
-  }
+  }   
 
   public MyFile[] getInfoFiles(String path) {
     File file;
@@ -54,12 +56,28 @@ public class FileUtil {
     String text = "";
     while((cad= file.read())!= null){
       String[] data = cad.split("\n");
-      for(int i = 0; i < data.length; i++){
-        String[] newText = data[i].split(",");
-          text += newText[0] + "     " + newText[1] + "     " + newText[2] + "     " + newText[3] + "     \n";
+        for(int i = 0; i < data.length; i++){
+          String[] info = data[i].split("\\\\");
+          
+            if(info.length == 6){
+              text += info[0] + "     " + info[1] + "     " + info[2] + "     " + info[3] + "     " + info[4] + "     " + info[5] + "     \n";
+            }else{
+              for(int j = 0; j < info.length; j++){
+                text += info[j] + "     ";
+              }
+              cad= file.read();
+              String[] newData = cad.split("\\\\");
+              for(int k = 0; k < newData.length; k++){
+                text += newData[k] + "     ";
+              }
+              text += "\n";
+          
+       }
+          
       }
+          
     }
-
-    return text;
+  return text;
   }
+  
 }

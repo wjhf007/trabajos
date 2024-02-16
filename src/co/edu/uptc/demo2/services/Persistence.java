@@ -2,10 +2,13 @@ package co.edu.uptc.demo2.services;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Persistence {
 
@@ -17,6 +20,7 @@ public class Persistence {
 	
 	public Persistence(String nameFile) {
 		f = new File(nameFile);
+		//System.setProperty("file.encoding", StandardCharsets.UTF_8.name());
 	}
 	
 public void open(char modo)	{
@@ -28,7 +32,7 @@ public void open(char modo)	{
 		}
 		else{
 		//modo lectura "r" abre el archivo
-		  fr = new FileReader(f);
+		  fr = new FileReader(f, StandardCharsets.UTF_8);
 		  br = new BufferedReader(fr);
 		}
 	} catch (IOException e) {
@@ -72,4 +76,40 @@ public void open(char modo)	{
 				e.printStackTrace();
 			}
 	 }
+
+	 public void readFileByteToByte() throws IOException{
+		File filePath = new File(f.getAbsolutePath());
+		FileInputStream fis = new FileInputStream(filePath);
+		byte[] byte_array = new byte[(int) filePath.length()];
+		int contador = 0;
+		int byteLeido;
+		while((byteLeido =fis.read()) != -1){	
+			//System.out.print(Integer.toHexString(byteLeido) + "");
+			
+			byte_array[contador] = (byte) byteLeido;
+			System.out.print(convertByte(byteLeido));
+			contador++;
+			//if(byteLeido == 92){
+			//	System.out.println();
+			//}
+			
+		}
+		fis.close();
+	 }
+
+	 public char convertByte(int byteLeido){
+		char output;
+		if(byteLeido == 92){
+			output = (char)00;
+		}else if (byteLeido >= 0 && byteLeido <= 9) {
+			output = (char) (byteLeido + 48);
+		}else{
+			output = (char) byteLeido;
+		}
+		return output;
+	 }
+
+//public String concatString(){
+//	
+//}
 }
