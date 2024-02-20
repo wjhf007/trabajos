@@ -76,51 +76,44 @@ public void open(char modo)	{
 				e.printStackTrace();
 			}
 	 }
-	 public int binaryParse(int num){
+
+	 public String getBinary(int num){
 		int x = num;
-		StringBuilder result = new StringBuilder("00000000");
-		int lastPosition = result.length() - 1;
+		StringBuilder auxByte = new StringBuilder("00000000");
+		int lastPosition = auxByte.length() - 1;
 		while(x>=1){
-		  int j = x%2;
-		  result.setCharAt(lastPosition, (char)j);
-		  x = x/2;
-		  lastPosition--;
+			int res = x%2;
+			auxByte.setCharAt(lastPosition, ((res == 1)?'1':'0'));
+			x = x/2;
+			lastPosition--;
 		}
-		return Integer.parseInt(result.toString());
-	  }
-	  
+		
+		return auxByte.toString();
+	 }
+
 	 public void readFileByteToByte() throws IOException{
 		File filePath = new File(f.getAbsolutePath());
 		FileInputStream fis = new FileInputStream(filePath);
 		byte[] byte_array = new byte[(int) filePath.length()];
 		int contador = 0;
 		int byteLeido;
-		while((byteLeido =fis.read()) != -1){	
-			System.out.print(Integer.toHexString(byteLeido) + " " + binaryParse(byteLeido));	
-			byte_array[contador] = (byte) byteLeido;
-			contador++;
-			//if(contador % 12 == 0){
-				System.out.println();
-				System.out.println();
-			
-			
+		int lastChar = 92;
+		String cad = "";
+		while((byteLeido =fis.read()) != -1){
+			if(byteLeido == 92 && lastChar != 92){
+					contador++;
+				cad += ' ' + "C: " + contador;	
+			}else if(contador == 4){
+				cad += getBinary(byteLeido);
+			}else if(contador == 5){
+				cad += getBinary(byteLeido);
+				contador = 0;
+			}else{
+				cad += (char) byteLeido;
+			}
+			lastChar = byteLeido;
 		}
+		System.out.print((contador%5 == 0)?(cad+"\n"):cad);
 		fis.close();
 	 }
-
-	 public char convertByte(int byteLeido){
-		char output;
-		if(byteLeido == 92){
-			output = (char)00;
-		}else if (byteLeido >= 0 && byteLeido <= 9) {
-			output = (char) (byteLeido + 48);
-		}else{
-			output = (char) byteLeido;
-		}
-		return output;
-	 }
-
-//public String concatString(){
-//	
-//}
 }

@@ -52,6 +52,7 @@ public class FileController {
 
     public void showByteData() throws IOException{
         Persistence pr = new Persistence("archivo.txt");
+        //pr.readFileByteToByte();
         pr.readFileByteToByte();
     }
 
