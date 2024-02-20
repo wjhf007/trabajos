@@ -76,7 +76,19 @@ public void open(char modo)	{
 				e.printStackTrace();
 			}
 	 }
-
+	 public int binaryParse(int num){
+		int x = num;
+		StringBuilder result = new StringBuilder("00000000");
+		int lastPosition = result.length() - 1;
+		while(x>=1){
+		  int j = x%2;
+		  result.setCharAt(lastPosition, (char)j);
+		  x = x/2;
+		  lastPosition--;
+		}
+		return Integer.parseInt(result.toString());
+	  }
+	  
 	 public void readFileByteToByte() throws IOException{
 		File filePath = new File(f.getAbsolutePath());
 		FileInputStream fis = new FileInputStream(filePath);
@@ -84,14 +96,13 @@ public void open(char modo)	{
 		int contador = 0;
 		int byteLeido;
 		while((byteLeido =fis.read()) != -1){	
-			//System.out.print(Integer.toHexString(byteLeido) + "");
-			
+			System.out.print(Integer.toHexString(byteLeido) + " " + binaryParse(byteLeido));	
 			byte_array[contador] = (byte) byteLeido;
-			System.out.print(convertByte(byteLeido));
 			contador++;
-			//if(byteLeido == 92){
-			//	System.out.println();
-			//}
+			//if(contador % 12 == 0){
+				System.out.println();
+				System.out.println();
+			
 			
 		}
 		fis.close();

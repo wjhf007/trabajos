@@ -80,4 +80,9 @@ public class FileUtil {
   return text;
   }
   
+  public void plusBinary(int num1, int num2, int num3){
+
+  }
+
+  
 }
